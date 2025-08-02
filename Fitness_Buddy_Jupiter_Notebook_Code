@@ -1,0 +1,29 @@
+from ibm_watsonx_ai.foundation_models import ModelInference
+
+# Step 1: Credentials (replace these)
+creds = {
+    "url": "https://eu-gb.ml.cloud.ibm.com",     # Your region
+    "apikey": "1I_N3NPRk_rJQrL5sT_x39yBdHoKieSuyqZTpjelVFM5"            # Your API key
+}
+
+# Step 2: Project ID
+project_id = "e7d5c094-af09-4c7e-8945-627bed8b8f83"
+
+# Step 3: Initialize the ModelInference object
+model = ModelInference(
+    model_id="ibm/granite-3-8b-instruct",
+    credentials=creds,
+    project_id=project_id
+)
+
+# ✅ Step 4: Generate output — PROMPT as positional argument (no 'input=')
+response = model.generate(
+    "Suggest 3 daily fitness tips for beginners to stay healthy.",
+    params={
+        "decoding_method": "greedy",
+        "max_new_tokens": 120,
+        "temperature": 0.5
+    }
+)
+# Step 5: Print the result
+print(response['results'][0]['generated_text'])
