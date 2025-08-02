@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Buddy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #84fab0, #8fd3f4);
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        input, button {
+            padding: 12px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        textarea {
+            width: 80%;
+            height: 150px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>💪 Fitness Buddy AI</h1>
+    <form method="POST">
+        <h2>Ask your fitness question:</h2>
+        <input id="query" name="query" placeholder="Say or type your question..." value="{{ query }}">
+        <button type="button" onclick="startListening()">🎤 Speak</button>
+        <button type="submit">Ask</button>
+    </form>
+
+    {% if response %}
+        <h3>🧠 AI Response:</h3>
+        <textarea readonly>{{ response }}</textarea>
+    {% endif %}
+
+    <script>
+        function startListening() {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.onresult = function(event) {
+                const text = event.results[0][0].transcript;
+                document.getElementById("query").value = text;
+            };
+            recognition.start();
+        }
+    </script>
+</body>
+</html>
